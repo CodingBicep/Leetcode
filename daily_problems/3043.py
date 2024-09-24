@@ -8,7 +8,7 @@
 # You need to find the length of the longest common prefix between all pairs of integers (x, y) such that x belongs to arr1 and y belongs to arr2.
 
 # Return the length of the longest common prefix among all pairs. If no common prefix exists among them, return 0.
-
+from typing import List
 
 class Solution:
     def longestCommonPrefix(self, arr1: List[int], arr2: List[int]) -> int:
@@ -44,15 +44,15 @@ class Solution:
 #        flag_s = set()
 #
 #        for i in arr1:
-            while i:
-                flag_s.add(i)
-                i //= 10
+#            while i:
+#                flag_s.add(i)
+#                i //= 10
 #
 #        ans = 0
 #        for i in arr2:
 #            while i:
 #                if i in flag_s:
-                    break
+#                    break
 #                i //= 10
 #            if i:
 #                ans = max(ans, len(str(i)))
