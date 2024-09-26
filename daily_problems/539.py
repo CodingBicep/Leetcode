@@ -36,7 +36,7 @@ def findMinDifference(timePoints):
     prev = -1
     first = -1
     last = -1
-    min_diff = floar('inf')
+    min_diff = float('inf')
 
     for i in range(1440):
         if time_set[i]:
