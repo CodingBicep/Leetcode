@@ -22,6 +22,25 @@
 # boolean isFull() Returns true if the deque is full, or false otherwise.
 
 
+# Explanation:
+# - We need to implement a circular deque with a fixed capacity (k).
+# - A deque allows inserting and deleting items from both the front and rear ends.
+# - The operations should work efficiently within the bounds of the deque's capacity.
+# - We'll keep track of the current size of the deque and the indices for the front and rear.
+
+# Approach:
+# 1. We maintain an array of size `k` to store the elements of the deque.
+# 2. We use two pointers, `front` and `rear`, to point to the start and end of the deque.
+#    - `front`: tracks the position where we insert/delete from the front.
+#    - `rear`: tracks the position where we insert/delete from the rear.
+# 3. We also keep track of the current size of the deque with a variable `size`.
+# 4. The deque is circular, so we use modulo arithmetic to wrap around when the indices exceed the bounds of the array.
+#    - For example, if `rear` moves beyond the end of the array, it wraps around to the start of the array.
+# 5. We implement methods to insert at the front, insert at the rear, delete from the front, delete from the rear, 
+#    and retrieve the front and rear items. We also implement methods to check if the deque is empty or full.
+
+
+
 class MyCircularDeque:
 
     def __init__(self, k: int):
