@@ -32,3 +32,75 @@ allOne.inc("leet");
 allOne.getMaxKey();  // return "hello"
 allOne.getMinKey();  // return "leet"
 */
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+typedef struct ListNode {
+    int count;
+    struct ListNode *prev;
+    struct ListNode *next;
+    char **keys;
+    int keyCount;
+} ListNode;
+
+typedef struct {
+    ListNode *head;
+    ListNode *tail;
+    int keyCount;
+    int *counts;
+    char **keys;
+} AllOne;
+
+ListNode *createNode() {
+    ListNode *node = (ListNode *)malloc(sizeof(ListNode));
+    node->count = 0;
+    node->keys = NULL;
+    node->keyCount = 0;
+    node->prev = NULL;
+    node->next = NULL;
+    return node;
+}
+
+AllOne* allOneCreate() {
+    AllOne *obj = (AllOne *)malloc(sizeof(AllOne));
+    obj->head = createNode();
+    obj->tail = createNode();
+    obj->head->next = obj->tail;
+    obj->tail->prev = obj->head;
+    obj->keyCount = 0;
+    obj->counts = (int *)calloc(10000, sizeof(int)); // Assumption: max keys < 10000
+    obj->keys = (char **)calloc(10000, sizeof(char *));
+    return obj;
+}
+
+void allOneInc(AllOne* obj, char* key) {
+    int count = obj->counts[key];
+    obj->counts[key]++;
+    int newCount = obj->counts[key];
+
+    if (newCount > count) {
+        // Code to update the linked list for the new count
+    }
+}
+
+void allOneDec(AllOne* obj, char* key) {
+    int count = obj->counts[key];
+    if (count > 0) {
+        obj->counts[key]--;
+        // Code to update the linked list for the new count
+    }
+}
+
+char* allOneGetMaxKey(AllOne* obj) {
+    // Return max key logic
+}
+
+char* allOneGetMinKey(AllOne* obj) {
+    // Return min key logic
+}
+
+void allOneFree(AllOne* obj) {
+    // Free memory logic
+}

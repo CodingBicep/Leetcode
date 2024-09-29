@@ -32,3 +32,96 @@ allOne.inc("leet");
 allOne.getMaxKey();  // return "hello"
 allOne.getMinKey();  // return "leet"
 */
+
+class ListNode {
+    constructor() {
+        this.count = 0;
+        this.keys = new Set();
+        this.prev = null;
+        this.next = null;
+    }
+}
+
+class AllOne {
+    constructor() {
+        this.keyCount = new Map();
+        this.countToNode = new Map();
+        this.head = new ListNode();
+        this.tail = new ListNode();
+        this.head.next = this.tail;
+        this.tail.prev = this.head;
+    }
+
+    _insertNodeAfter(newNode, prevNode) {
+        newNode.prev = prevNode;
+        newNode.next = prevNode.next;
+        prevNode.next.prev = newNode;
+        prevNode.next = newNode;
+    }
+
+    inc(key) {
+        let count = this.keyCount.get(key) || 0;
+        this.keyCount.set(key, count + 1);
+        let newCount = count + 1;
+
+        if (!this.countToNode.has(newCount)) {
+            let newNode = new ListNode();
+            this.countToNode.set(newCount, newNode);
+            this._insertNodeAfter(newNode, count === 0 ? this.head : this.countToNode.get(count));
+        }
+
+        this.countToNode.get(newCount).keys.add(key);
+        
+        if (count > 0) {
+            this.countToNode.get(count).keys.delete(key);
+            if (this.countToNode.get(count).keys.size === 0) {
+                this._removeNode(this.countToNode.get(count));
+                this.countToNode.delete(count);
+            }
+        }
+    }
+
+    dec(key) {
+        let count = this.keyCount.get(key);
+        this.keyCount.set(key, count - 1);
+        let newCount = count - 1;
+
+        this.countToNode.get(count).keys.delete(key);
+        if (this.countToNode.get(count).keys.size === 0) {
+            this._removeNode(this.countToNode.get(count));
+            this.countToNode.delete(count);
+        }
+
+        if (newCount > 0) {
+            if (!this.countToNode.has(newCount)) {
+                let newNode = new ListNode();
+                this.countToNode.set(newCount, newNode);
+                this._insertNodeAfter(newNode, this.countToNode.get(count).prev);
+            }
+            this.countToNode.get(newCount).keys.add(key);
+        } else {
+            this.keyCount.delete(key);
+        }
+    }
+
+    getMaxKey() {
+        return this.tail.prev === this.head ? "" : Array.from(this.tail.prev.keys)[0];
+    }
+
+    getMinKey() {
+        return this.head.next === this.tail ? "" : Array.from(this.head.next.keys)[0];
+    }
+
+    _removeNode(node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+}
+
+// ... (additional helper functions such as `insertNewKey`, `incrementExistingKey`, `moveToPreviousCount` would be implemented here)
+
+// (The remaining helpers and logic can be implemented following the below pattern):
+// Implement helper methods such as `insertNewKey`, `incrementExistingKey`, and `moveToPreviousCount`
+// which follow the logic outlined in the provided Java code. These helpers manage the linked list
+// and the nodes map, ensuring that keys are correctly incremented or decremented in counts and
+// the corresponding nodes are inserted or removed as needed within the list structure.
